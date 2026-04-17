@@ -3,10 +3,10 @@ FROM gradle:8.5-jdk17 AS build
 WORKDIR /app
 COPY . .
 
-# FIX 1: Le damos permisos explícitos de ejecución a Gradle (Crucial para proyectos hechos en Windows)
+# FIX 1: Permisos (ESTO DEBE IR PRIMERO)
 RUN chmod +x ./gradlew
 
-# FIX 2: Usamos --no-daemon para que Gradle no consuma toda la RAM del plan gratuito de Render
+# FIX 2: Compilar con no-daemon (ÚNICO COMANDO DE BUILD)
 RUN ./gradlew clean bootJar -x test --no-daemon
 
 # Paso 2: Ejecución (Run)
